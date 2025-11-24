@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Kaushan Script', cursive;
-            background: #ff018c;
+            background: #190e14;
             overflow: hidden;
             height: 100vh;
             position: relative;
@@ -214,20 +214,17 @@
             content: '';
         }
 
-        /* MOÑO AMARILLO - CORREGIDO PARA SER CLICKEABLE */
+        /* MOÑO AMARILLO - AHORA CLICKEABLE */
         .gift-bow {
             position: absolute;
-            width: 50px;
-            height: 60px;
+            width: 40px;
+            height: 50px;
             left: 50%;
-            top: -45px;
+            top: -40px;
             transform: translateX(-50%);
             cursor: pointer;
             z-index: 15;
             touch-action: manipulation;
-            /* Hacer que todo el área sea clickeable */
-            background: rgba(253, 197, 109, 0.3); /* Temporal para ver el área */
-            border-radius: 50%;
         }
 
         .gift-bow:before, .gift-bow:after {
@@ -237,10 +234,9 @@
             width: 100%;
             height: 100%;
             content: "";
-            box-shadow: inset 0 0 0 15px #fdc56d;
-            border-radius: 50%;
+            box-shadow: inset 0 0 0 12px #fdc56d;
+            border-radius: 30px;
             transform-origin: 50% 100%;
-            pointer-events: none; /* Los pseudo-elementos no interceptan clicks */
         }
 
         .gift-bow:before {
@@ -249,19 +245,6 @@
 
         .gift-bow:after {
             transform: translateX(45%) skewY(-40deg);
-        }
-
-        /* Botón invisible que cubre TODO el moño */
-        .bow-click-area {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 20;
-            top: 0;
-            left: 0;
         }
 
         .gift-body {
@@ -491,10 +474,8 @@
             <div class="gift-container" id="giftContainer">
                 <div class="gift-box">
                     <div class="gift-cover">
-                        <!-- MOÑO AMARILLO CON ÁREA CLICKEABLE COMPLETA -->
-                        <div class="gift-bow" id="giftBow">
-                            <button class="bow-click-area" id="bowClickArea"></button>
-                        </div>
+                        <!-- MOÑO AMARILLO CLICKEABLE -->
+                        <div class="gift-bow" id="giftBow"></div>
                     </div>
                     <div class="gift-body"></div>
                 </div>
@@ -651,11 +632,11 @@
             loop();
         }
 
-        // Sistema del regalo - CORREGIDO (área clickeable completa)
+        // Sistema del regalo - CORREGIDO (solo moño clickeable)
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             
-            const bowClickArea = document.getElementById("bowClickArea");
+            const giftBow = document.getElementById("giftBow");
             const giftContainer = document.getElementById("giftContainer");
             const specialMessage = document.getElementById("specialMessage");
             const continueBtn = document.getElementById("continueBtn");
@@ -705,9 +686,9 @@
                 }, 300);
             }
             
-            // EVENT LISTENER EN EL BOTÓN QUE CUBRE TODO EL MOÑO
-            bowClickArea.addEventListener('click', openGift);
-            bowClickArea.addEventListener('touchstart', function(e) {
+            // EVENT LISTENER SOLO EN EL MOÑO
+            giftBow.addEventListener('click', openGift);
+            giftBow.addEventListener('touchstart', function(e) {
                 e.preventDefault();
                 openGift();
             });
