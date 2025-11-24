@@ -174,14 +174,12 @@
             margin: 20px 0;
         }
 
-        /* Caja de regalo - AHORA CLICKEABLE */
+        /* Caja de regalo */
         .gift-container {
             position: relative;
             width: 200px;
             height: 140px;
             z-index: 10;
-            cursor: pointer;
-            touch-action: manipulation;
         }
 
         .gift-box {
@@ -264,21 +262,80 @@
             position: absolute;
         }
 
-        .tap-text {
-            position: absolute;
-            color: #fff;
-            width: 100%;
-            text-align: center;
-            left: 0;
-            bottom: -40px;
-            font-size: 16px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: pulse 2s infinite;
+        /* BOTÓN PRINCIPAL CON ANIMACIÓN */
+        .open-gift-btn {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #8b4513;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 15;
+            font-family: 'Kaushan Script', cursive;
+            box-shadow: 
+                0 0 25px rgba(255, 215, 0, 0.6),
+                0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+            touch-action: manipulation;
+            position: relative;
+            overflow: hidden;
+            animation: btnPulse 2s ease-in-out infinite, btnFloat 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+            border: 3px solid #ffa500;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
+        .open-gift-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 35px rgba(255, 215, 0, 0.8),
+                0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .open-gift-btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 25px rgba(255, 215, 0, 0.6),
+                    0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 40px rgba(255, 215, 0, 0.9),
+                    0 8px 25px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        @keyframes btnFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Efecto de brillo en el botón */
+        .open-gift-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: btnShine 3s ease-in-out infinite;
+        }
+
+        @keyframes btnShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
         /* Animaciones del regalo */
@@ -469,7 +526,6 @@
         </div>
         
         <div class="gift-section">
-            <!-- LA CAJA AHORA ES DIRECTAMENTE CLICKEABLE -->
             <div class="gift-container" id="giftContainer">
                 <div class="gift-box">
                     <div class="gift-cover">
@@ -477,9 +533,13 @@
                     </div>
                     <div class="gift-body"></div>
                 </div>
-                <div class="tap-text">¡Toca el regalo!</div>
             </div>
         </div>
+        
+        <!-- BOTÓN PRINCIPAL CON ANIMACIÓN -->
+        <button class="open-gift-btn" id="openGiftBtn">
+            🎁 Toca para abrir regalo 🎁
+        </button>
         
         <button class="continue-btn" id="continueBtn">Continuar 🎵</button>
     </div>
@@ -630,10 +690,11 @@
             loop();
         }
 
-        // Sistema del regalo - CORREGIDO
+        // Sistema del regalo - CON BOTÓN PRINCIPAL
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             
+            const openGiftBtn = document.getElementById("openGiftBtn");
             const giftContainer = document.getElementById("giftContainer");
             const specialMessage = document.getElementById("specialMessage");
             const continueBtn = document.getElementById("continueBtn");
@@ -645,7 +706,12 @@
                 if (giftOpened) return;
                 giftOpened = true;
                 
-                console.log("¡Regalo abierto!");
+                console.log("¡Botón clickeado! Regalo abierto");
+                
+                // Deshabilitar el botón
+                openGiftBtn.disabled = true;
+                openGiftBtn.style.opacity = '0.7';
+                openGiftBtn.style.animation = 'none';
                 
                 // Paso 1: Animación de wobble
                 giftContainer.classList.add('wobble');
@@ -671,6 +737,7 @@
                 specialMessage.classList.remove('visible');
                 continueBtn.classList.remove('visible');
                 giftContainer.style.display = 'none';
+                openGiftBtn.style.display = 'none';
                 
                 // Iniciar fuegos artificiales
                 startFireworks();
@@ -683,9 +750,9 @@
                 }, 300);
             }
             
-            // EVENT LISTENER CORREGIDO - Ahora en la caja directamente
-            giftContainer.addEventListener('click', openGift);
-            giftContainer.addEventListener('touchstart', function(e) {
+            // EVENT LISTENER EN EL BOTÓN PRINCIPAL
+            openGiftBtn.addEventListener('click', openGift);
+            openGiftBtn.addEventListener('touchstart', function(e) {
                 e.preventDefault();
                 openGift();
             });
