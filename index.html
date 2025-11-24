@@ -104,20 +104,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 7;
+            z-index: 10; /* Aumentado para estar por encima de otros elementos */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            pointer-events: none; /* Permite que los clics pasen a los elementos hijos */
         }
 
         /* Mensajes de texto */
         .birthday-text {
             text-align: center;
             margin-bottom: 30px;
-            z-index: 8;
+            z-index: 11;
             width: 100%;
+            pointer-events: none;
         }
 
         .text-row {
@@ -136,11 +138,11 @@
                 0 0 21px rgba(30,132,242,0.92),
                 0 0 34px rgba(30,132,242,0.78),
                 0 0 54px rgba(30,132,242,0.92);
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin: 0 3px;
             animation: neon 0.08s ease-in-out infinite alternate;
             background: rgba(0, 0, 0, 0.4);
-            padding: 2px 4px;
+            padding: 2px 2px;
             border-radius: 4px;
         }
 
@@ -172,6 +174,7 @@
             flex-direction: column;
             align-items: center;
             margin: 20px 0;
+            pointer-events: none;
         }
 
         /* Caja de regalo */
@@ -179,7 +182,8 @@
             position: relative;
             width: 200px;
             height: 140px;
-            z-index: 10;
+            z-index: 12;
+            pointer-events: none;
         }
 
         .gift-box {
@@ -202,6 +206,7 @@
             background: #e74c3c;
             border-radius: 10px 10px 0 0;
             transition: all 0.3s ease;
+            transform-origin: bottom center;
         }
 
         .gift-cover:before {
@@ -262,21 +267,40 @@
             position: absolute;
         }
 
-        /* BOTÓN PRINCIPAL SIMPLE Y FUNCIONAL */
+        /* CONTENEDOR SEPARADO PARA EL BOTÓN */
+        .button-section {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+            z-index: 15;
+            width: 100%;
+            pointer-events: auto; /* Permite que los botones sean clickeables */
+        }
+
+        /* BOTÓN PRINCIPAL SEPARADO Y FUNCIONAL */
         .open-gift-btn {
             background: #ff6b6b;
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 18px 35px;
             border-radius: 25px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            z-index: 15;
             font-family: 'Kaushan Script', cursive;
-            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
-            margin-top: 30px;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
             touch-action: manipulation;
             transition: all 0.3s ease;
+            min-width: 280px;
+            z-index: 16;
+            position: relative;
+            pointer-events: auto; /* Asegura que sea clickeable */
+        }
+
+        .open-gift-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
         }
 
         .open-gift-btn:active {
@@ -290,11 +314,11 @@
         }
 
         .gift-container.open .gift-cover {
-            animation: flyUp 0.6s ease-out forwards;
+            animation: openLid 0.6s ease-out forwards;
         }
 
         .gift-container.open .gift-body {
-            animation: flyDown 0.4s ease-out 0.1s forwards;
+            animation: revealGift 0.4s ease-out 0.1s forwards;
         }
 
         @keyframes wobble {
@@ -303,14 +327,26 @@
             75% { transform: rotate(-3deg); }
         }
 
-        @keyframes flyUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(15deg); opacity: 0; }
+        @keyframes openLid {
+            0% { 
+                transform: rotateX(0deg); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: rotateX(-120deg) translateY(-20px); 
+                opacity: 0.8;
+            }
         }
 
-        @keyframes flyDown {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
+        @keyframes revealGift {
+            0% { 
+                transform: scaleY(1); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: scaleY(1.2); 
+                opacity: 1;
+            }
         }
 
         /* Mensaje especial */
@@ -323,7 +359,7 @@
             padding: 25px;
             border-radius: 15px;
             text-align: center;
-            z-index: 11;
+            z-index: 20; /* Aumentado para estar por encima de todo */
             opacity: 0;
             transition: opacity 0.8s ease;
             width: 90%;
@@ -331,6 +367,7 @@
             border: 2px solid #ff6b6b;
             box-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
             backdrop-filter: blur(5px);
+            pointer-events: auto; /* Permite interacción con el mensaje */
         }
 
         .special-message.visible {
@@ -359,13 +396,14 @@
             border-radius: 25px;
             font-size: 1.1rem;
             cursor: pointer;
-            z-index: 12;
+            z-index: 21; /* Aumentado para estar por encima del mensaje */
             opacity: 0;
             transition: opacity 0.5s ease;
             font-family: 'Kaushan Script', cursive;
             box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
             margin-top: 20px;
             touch-action: manipulation;
+            pointer-events: auto; /* Asegura que sea clickeable */
         }
 
         .continue-btn.visible {
@@ -482,10 +520,12 @@
             </div>
         </div>
         
-        <!-- BOTÓN PRINCIPAL SIMPLE Y FUNCIONAL -->
-        <button class="open-gift-btn" id="openGiftBtn">
-            🎁 Toca para abrir regalo 🎁
-        </button>
+        <!-- CONTENEDOR SEPARADO PARA EL BOTÓN -->
+        <div class="button-section">
+            <button class="open-gift-btn" id="openGiftBtn">
+                🎁 Toca para abrir regalo 🎁
+            </button>
+        </div>
         
         <button class="continue-btn" id="continueBtn">Continuar 🎵</button>
     </div>
@@ -657,6 +697,7 @@
                 // Deshabilitar el botón
                 openGiftBtn.disabled = true;
                 openGiftBtn.style.opacity = '0.7';
+                openGiftBtn.style.pointerEvents = 'none';
                 
                 // Paso 1: Animación de wobble
                 giftContainer.classList.add('wobble');
