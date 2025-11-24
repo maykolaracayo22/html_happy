@@ -262,7 +262,7 @@
             position: absolute;
         }
 
-        /* BOTÓN PRINCIPAL CON ANIMACIÓN - CORREGIDO */
+        /* BOTÓN PRINCIPAL CON ANIMACIÓN - COMPLETAMENTE CORREGIDO */
         .open-gift-btn {
             background: linear-gradient(45deg, #dfd86d, #ffed4e);
             color: #8b4513;
@@ -280,14 +280,16 @@
             margin-top: 30px;
             touch-action: manipulation;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             animation: btnPulse 2s ease-in-out infinite, btnFloat 3s ease-in-out infinite;
             transition: all 0.3s ease;
             border: 3px solid #ffa500;
-            /* Asegurar que el botón sea clickeable en toda su área */
             display: inline-block;
             min-height: 60px;
             line-height: 1.2;
+            /* Asegurar que todo el botón sea clickeable */
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         .open-gift-btn:hover {
@@ -319,31 +321,36 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Efecto de brillo en el botón - CORREGIDO */
-        /* Usamos un pseudo-elemento que no interfiera con la interacción */
+        /* Efecto de brillo en el botón - COMPLETAMENTE CORREGIDO */
         .open-gift-btn::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(
-                45deg,
+                90deg,
                 transparent,
-                rgba(255, 255, 255, 0.3),
+                rgba(255, 255, 255, 0.4),
                 transparent
             );
-            transform: rotate(45deg);
+            transition: none;
             animation: btnShine 3s ease-in-out infinite;
-            /* Asegurar que el pseudo-elemento no bloquee los clics */
             pointer-events: none;
-            z-index: -1;
+            z-index: 1;
+            border-radius: 50px;
         }
 
         @keyframes btnShine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Contenedor para el efecto de brillo que no interfiere */
+        .btn-content {
+            position: relative;
+            z-index: 2;
         }
 
         /* Animaciones del regalo */
@@ -428,6 +435,8 @@
             box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
             margin-top: 20px;
             touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         .continue-btn.visible {
@@ -544,9 +553,9 @@
             </div>
         </div>
         
-        <!-- BOTÓN PRINCIPAL CON ANIMACIÓN - CORREGIDO -->
+        <!-- BOTÓN PRINCIPAL CON ANIMACIÓN - COMPLETAMENTE CORREGIDO -->
         <button class="open-gift-btn" id="openGiftBtn">
-            🎁 Toca para abrir regalo 🎁
+            <span class="btn-content">🎁 Toca para abrir regalo 🎁</span>
         </button>
         
         <button class="continue-btn" id="continueBtn">Continuar 🎵</button>
@@ -698,7 +707,7 @@
             loop();
         }
 
-        // Sistema del regalo - CON BOTÓN PRINCIPAL CORREGIDO
+        // Sistema del regalo - COMPLETAMENTE CORREGIDO
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             
@@ -766,7 +775,7 @@
                 }, 300);
             }
             
-            // EVENT LISTENER EN EL BOTÓN PRINCIPAL - CORREGIDO
+            // EVENT LISTENER EN EL BOTÓN PRINCIPAL - COMPLETAMENTE CORREGIDO
             openGiftBtn.addEventListener('click', openGift);
             openGiftBtn.addEventListener('touchstart', function(e) {
                 e.preventDefault();
