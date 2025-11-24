@@ -174,12 +174,14 @@
             margin: 20px 0;
         }
 
-        /* Caja de regalo */
+        /* Caja de regalo - AHORA CLICKEABLE */
         .gift-container {
             position: relative;
             width: 200px;
             height: 140px;
             z-index: 10;
+            cursor: pointer;
+            touch-action: manipulation;
         }
 
         .gift-box {
@@ -214,17 +216,13 @@
             content: '';
         }
 
-        /* MOÑO AMARILLO - AHORA CLICKEABLE */
         .gift-bow {
             position: absolute;
-            width: 40px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             left: 50%;
-            top: -40px;
+            top: -30px;
             transform: translateX(-50%);
-            cursor: pointer;
-            z-index: 15;
-            touch-action: manipulation;
         }
 
         .gift-bow:before, .gift-bow:after {
@@ -234,7 +232,7 @@
             width: 100%;
             height: 100%;
             content: "";
-            box-shadow: inset 0 0 0 12px #fdc56d;
+            box-shadow: inset 0 0 0 8px #fdc56d;
             border-radius: 30px;
             transform-origin: 50% 100%;
         }
@@ -471,15 +469,15 @@
         </div>
         
         <div class="gift-section">
+            <!-- LA CAJA AHORA ES DIRECTAMENTE CLICKEABLE -->
             <div class="gift-container" id="giftContainer">
                 <div class="gift-box">
                     <div class="gift-cover">
-                        <!-- MOÑO AMARILLO CLICKEABLE -->
-                        <div class="gift-bow" id="giftBow"></div>
+                        <div class="gift-bow"></div>
                     </div>
                     <div class="gift-body"></div>
                 </div>
-                <div class="tap-text">¡Toca el moño amarillo!</div>
+                <div class="tap-text">¡Toca el regalo!</div>
             </div>
         </div>
         
@@ -632,11 +630,10 @@
             loop();
         }
 
-        // Sistema del regalo - CORREGIDO (solo moño clickeable)
+        // Sistema del regalo - CORREGIDO
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             
-            const giftBow = document.getElementById("giftBow");
             const giftContainer = document.getElementById("giftContainer");
             const specialMessage = document.getElementById("specialMessage");
             const continueBtn = document.getElementById("continueBtn");
@@ -648,7 +645,7 @@
                 if (giftOpened) return;
                 giftOpened = true;
                 
-                console.log("¡Moño clickeado! Regalo abierto");
+                console.log("¡Regalo abierto!");
                 
                 // Paso 1: Animación de wobble
                 giftContainer.classList.add('wobble');
@@ -686,9 +683,9 @@
                 }, 300);
             }
             
-            // EVENT LISTENER SOLO EN EL MOÑO
-            giftBow.addEventListener('click', openGift);
-            giftBow.addEventListener('touchstart', function(e) {
+            // EVENT LISTENER CORREGIDO - Ahora en la caja directamente
+            giftContainer.addEventListener('click', openGift);
+            giftContainer.addEventListener('touchstart', function(e) {
                 e.preventDefault();
                 openGift();
             });
