@@ -262,7 +262,7 @@
             position: absolute;
         }
 
-        /* BOTÓN PRINCIPAL CON ANIMACIÓN */
+        /* BOTÓN PRINCIPAL CON ANIMACIÓN - CORREGIDO */
         .open-gift-btn {
             background: linear-gradient(45deg, #dfd86d, #ffed4e);
             color: #8b4513;
@@ -284,6 +284,10 @@
             animation: btnPulse 2s ease-in-out infinite, btnFloat 3s ease-in-out infinite;
             transition: all 0.3s ease;
             border: 3px solid #ffa500;
+            /* Asegurar que el botón sea clickeable en toda su área */
+            display: inline-block;
+            min-height: 60px;
+            line-height: 1.2;
         }
 
         .open-gift-btn:hover {
@@ -315,7 +319,8 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Efecto de brillo en el botón */
+        /* Efecto de brillo en el botón - CORREGIDO */
+        /* Usamos un pseudo-elemento que no interfiera con la interacción */
         .open-gift-btn::before {
             content: '';
             position: absolute;
@@ -331,6 +336,9 @@
             );
             transform: rotate(45deg);
             animation: btnShine 3s ease-in-out infinite;
+            /* Asegurar que el pseudo-elemento no bloquee los clics */
+            pointer-events: none;
+            z-index: -1;
         }
 
         @keyframes btnShine {
@@ -536,7 +544,7 @@
             </div>
         </div>
         
-        <!-- BOTÓN PRINCIPAL CON ANIMACIÓN -->
+        <!-- BOTÓN PRINCIPAL CON ANIMACIÓN - CORREGIDO -->
         <button class="open-gift-btn" id="openGiftBtn">
             🎁 Toca para abrir regalo 🎁
         </button>
@@ -690,7 +698,7 @@
             loop();
         }
 
-        // Sistema del regalo - CON BOTÓN PRINCIPAL
+        // Sistema del regalo - CON BOTÓN PRINCIPAL CORREGIDO
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             
@@ -712,6 +720,7 @@
                 openGiftBtn.disabled = true;
                 openGiftBtn.style.opacity = '0.7';
                 openGiftBtn.style.animation = 'none';
+                openGiftBtn.style.pointerEvents = 'none';
                 
                 // Paso 1: Animación de wobble
                 giftContainer.classList.add('wobble');
@@ -757,7 +766,7 @@
                 }, 300);
             }
             
-            // EVENT LISTENER EN EL BOTÓN PRINCIPAL
+            // EVENT LISTENER EN EL BOTÓN PRINCIPAL - CORREGIDO
             openGiftBtn.addEventListener('click', openGift);
             openGiftBtn.addEventListener('touchstart', function(e) {
                 e.preventDefault();
