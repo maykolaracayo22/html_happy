@@ -262,95 +262,26 @@
             position: absolute;
         }
 
-        /* BOTÓN PRINCIPAL CON ANIMACIÓN - COMPLETAMENTE CORREGIDO */
+        /* BOTÓN PRINCIPAL SIMPLE Y FUNCIONAL */
         .open-gift-btn {
-            background: linear-gradient(45deg, #dfd86d, #ffed4e);
-            color: #8b4513;
+            background: #ff6b6b;
+            color: white;
             border: none;
-            padding: 18px 35px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
             cursor: pointer;
             z-index: 15;
             font-family: 'Kaushan Script', cursive;
-            box-shadow: 
-                0 0 25px rgba(255, 215, 0, 0.6),
-                0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
             margin-top: 30px;
             touch-action: manipulation;
-            position: relative;
-            overflow: visible;
-            animation: btnPulse 2s ease-in-out infinite, btnFloat 3s ease-in-out infinite;
             transition: all 0.3s ease;
-            border: 3px solid #ffa500;
-            display: inline-block;
-            min-height: 60px;
-            line-height: 1.2;
-            /* Asegurar que todo el botón sea clickeable */
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
-
-        .open-gift-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 
-                0 0 35px rgba(255, 215, 0, 0.8),
-                0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .open-gift-btn:active {
             transform: scale(0.95);
-        }
-
-        @keyframes btnPulse {
-            0%, 100% { 
-                box-shadow: 
-                    0 0 25px rgba(255, 215, 0, 0.6),
-                    0 5px 15px rgba(0, 0, 0, 0.3);
-            }
-            50% { 
-                box-shadow: 
-                    0 0 40px rgba(255, 215, 0, 0.9),
-                    0 8px 25px rgba(0, 0, 0, 0.4);
-            }
-        }
-
-        @keyframes btnFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Efecto de brillo en el botón - COMPLETAMENTE CORREGIDO */
-        .open-gift-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.4),
-                transparent
-            );
-            transition: none;
-            animation: btnShine 3s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: 50px;
-        }
-
-        @keyframes btnShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Contenedor para el efecto de brillo que no interfiere */
-        .btn-content {
-            position: relative;
-            z-index: 2;
+            background: #ff5252;
         }
 
         /* Animaciones del regalo */
@@ -435,8 +366,6 @@
             box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
             margin-top: 20px;
             touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
         }
 
         .continue-btn.visible {
@@ -553,9 +482,9 @@
             </div>
         </div>
         
-        <!-- BOTÓN PRINCIPAL CON ANIMACIÓN - COMPLETAMENTE CORREGIDO -->
+        <!-- BOTÓN PRINCIPAL SIMPLE Y FUNCIONAL -->
         <button class="open-gift-btn" id="openGiftBtn">
-            <span class="btn-content">🎁 Toca para abrir regalo 🎁</span>
+            🎁 Toca para abrir regalo 🎁
         </button>
         
         <button class="continue-btn" id="continueBtn">Continuar 🎵</button>
@@ -707,7 +636,7 @@
             loop();
         }
 
-        // Sistema del regalo - COMPLETAMENTE CORREGIDO
+        // Sistema del regalo - COMPLETAMENTE FUNCIONAL
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             
@@ -728,8 +657,6 @@
                 // Deshabilitar el botón
                 openGiftBtn.disabled = true;
                 openGiftBtn.style.opacity = '0.7';
-                openGiftBtn.style.animation = 'none';
-                openGiftBtn.style.pointerEvents = 'none';
                 
                 // Paso 1: Animación de wobble
                 giftContainer.classList.add('wobble');
@@ -775,7 +702,7 @@
                 }, 300);
             }
             
-            // EVENT LISTENER EN EL BOTÓN PRINCIPAL - COMPLETAMENTE CORREGIDO
+            // EVENT LISTENER EN EL BOTÓN PRINCIPAL - COMPLETAMENTE FUNCIONAL
             openGiftBtn.addEventListener('click', openGift);
             openGiftBtn.addEventListener('touchstart', function(e) {
                 e.preventDefault();
