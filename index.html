@@ -264,12 +264,12 @@
 
         /* BOTÓN PRINCIPAL CON ANIMACIÓN */
         .open-gift-btn {
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            background: linear-gradient(45deg, #dfd86d, #ffed4e);
             color: #8b4513;
             border: none;
             padding: 18px 35px;
             border-radius: 50px;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
             z-index: 15;
@@ -743,7 +743,14 @@
                 startFireworks();
                 
                 // Mostrar video
-                video.innerHTML = '<iframe src="https://www.youtube.com/embed/1CqP7a3ZNCE?controls=0&loop=1&autoplay=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+                video.innerHTML = `
+                    <iframe 
+                        src="https://www.youtube.com/embed/zRIbf6JqkNc?autoplay=1&loop=1&playlist=zRIbf6JqkNc" 
+                        frameborder="0" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                `;
                 
                 setTimeout(() => {
                     video.classList.add('visible');
